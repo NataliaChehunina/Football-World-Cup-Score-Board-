@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FootballWorldCupScoreBoardLib.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class FootballWorldCupScoreBoardLibTests
     {
         [TestMethod]
         public void TestMethod1()
