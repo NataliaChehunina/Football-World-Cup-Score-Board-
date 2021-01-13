@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace FootballWorldCupScoreBoardLib
 {
-    class Scoreboard
+    public class Scoreboard
     {
         public List<IDisplayable> Matches;
-        public Scoreboard (List<IDisplayable> matches)
+
+        public Scoreboard ()
         {
+            Matches = new List<IDisplayable>();
+        }
+        public Scoreboard (List<IDisplayable> matches): base()
+        {            
             Matches.AddRange(matches); //to avoid mutilation of the list
         }
 
-        public string StartGame() //returns GameId; String.Empty - in case of failures
+        public string StartGame(string HomeTeam, string AwayTeam) //returns GameId; String.Empty - in case of failures
         { 
             throw new NotImplementedException();           
         }
@@ -29,7 +34,7 @@ namespace FootballWorldCupScoreBoardLib
             throw new NotImplementedException();
         }
 
-        public List<IDisplayable> GetSummary()
+        public List<string> GetSummary()
         {
             throw new NotImplementedException();
         }

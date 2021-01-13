@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
+    <Compile Include="GameDuplicateException.cs" />
+    <Compile Include="GameIsNotFoundException.cs" />
     <Compile Include="IDisplayable.cs" />
+    <Compile Include="InvalidInputParametersException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scoreboard.cs" />
   </ItemGroup>

@@ -22,5 +22,7 @@ namespace FootballWorldCupScoreBoardLib
             HomeTeamScore = homeTeamScore;
             AwayTeamScore = awayTeamScore;
         }
+
+        //TODO: override Equals and GetHashCode
     }
 }
