@@ -22,7 +22,7 @@ namespace FootballWorldCupScoreBoardLib
             AwayTeamScore = awayTeamScore;
 
             if(gameId == String.Empty)
-                GameId = new Guid().ToString();
+                GameId = Guid.NewGuid().ToString();
             else
                 GameId = gameId;
 

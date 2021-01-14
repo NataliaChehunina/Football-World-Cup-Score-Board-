@@ -23,13 +23,17 @@ namespace FootballWorldCupScoreBoardLib
         {
             if (String.IsNullOrEmpty(homeTeam) || String.IsNullOrEmpty(awayTeam))
                 throw new InvalidInputParametersException(homeTeam, awayTeam);
+
             if (homeTeam == awayTeam)
                 throw new InvalidInputParametersException(homeTeam);
+
             return AddGame(homeTeam, awayTeam, 0, 0, Matches);
         }
 
         private string AddGame(string homeTeam, string awayTeam, byte homeTeamScore, byte awayTeamScore, List<IDisplayable> matches)
         {
+            if (matches is null)
+                return String.Empty;
             Game game = new Game(homeTeam, awayTeam, homeTeamScore, awayTeamScore);
             matches.Add(game);
             return game.GameId;
@@ -37,7 +41,31 @@ namespace FootballWorldCupScoreBoardLib
 
         public bool UpdateScore(string gameId, byte homeTeamScore, byte awayTeamScore)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(gameId))
+                throw new InvalidInputParametersException();
+
+            if (Matches.Count == 0)
+                throw new EmptyCollectionException();
+
+            int index = FindIndex(gameId, homeTeamScore, awayTeamScore, Matches);
+
+            if (index == -2)
+                return false;
+
+            if (index == -1)
+                throw new GameIsNotFoundException(gameId);
+
+            IDisplayable game = (Game)Matches[index];
+            Matches[index] = new Game(game.HomeTeamName, game.AwayTeamName, homeTeamScore, awayTeamScore, gameId);
+            return true;
+        }
+
+        private int FindIndex(string gameId, byte homeTeamScore, byte awayTeamScore, List<IDisplayable> matches)
+        {
+            if (matches is null)
+                return -2;
+
+            return matches.FindIndex(elem => elem.GameId == gameId);
         }
 
         public bool FinishGame(string gameId)

@@ -92,7 +92,7 @@ namespace FootballWorldCupScoreBoardLib.Tests
         {
             Scoreboard board = new Scoreboard();
             board.StartGame("Spain","Greece");
-            Assert.ThrowsException<GameIsNotFoundException>(() => board.FinishGame(new Guid().ToString()));
+            Assert.ThrowsException<GameIsNotFoundException>(() => board.FinishGame("123"));
         }
 
         [TestMethod]
@@ -129,7 +129,7 @@ namespace FootballWorldCupScoreBoardLib.Tests
         {
             Scoreboard board = new Scoreboard();
             board.StartGame("Spain", "Greece");
-            Assert.ThrowsException<GameIsNotFoundException>(() => board.UpdateScore(new Guid().ToString(), 0, 2));
+            Assert.ThrowsException<GameIsNotFoundException>(() => board.UpdateScore("123", 0, 2));
         }
 
         [TestMethod]
