@@ -8,18 +8,18 @@ namespace FootballWorldCupScoreBoardLib
 {
     public class Scoreboard
     {
-        public List<IDisplayable> Matches;
+        public List<Game> Matches;
 
-        public Scoreboard ()
+        public Scoreboard()
         {
-            Matches = new List<IDisplayable>();
+            Matches = new List<Game>();
         }
-        public Scoreboard (List<IDisplayable> matches): base()
-        {            
+        public Scoreboard(List<Game> matches) : base()
+        {
             Matches.AddRange(matches); //to avoid mutilation of the list
         }
 
-        public string StartGame(string homeTeam, string awayTeam) //returns GameId; String.Empty - in case of failures
+        public string StartGame(string homeTeam, string awayTeam) //returns GameId
         {
             if (String.IsNullOrEmpty(homeTeam) || String.IsNullOrEmpty(awayTeam))
                 throw new InvalidInputParametersException(homeTeam, awayTeam);
@@ -27,15 +27,13 @@ namespace FootballWorldCupScoreBoardLib
             if (homeTeam == awayTeam)
                 throw new InvalidInputParametersException(homeTeam);
 
-            return AddGame(homeTeam, awayTeam, 0, 0, Matches);
+            return AddGame(homeTeam, awayTeam, 0, 0);
         }
 
-        private string AddGame(string homeTeam, string awayTeam, byte homeTeamScore, byte awayTeamScore, List<IDisplayable> matches)
+        private string AddGame(string homeTeam, string awayTeam, byte homeTeamScore, byte awayTeamScore)
         {
-            if (matches is null)
-                return String.Empty;
             Game game = new Game(homeTeam, awayTeam, homeTeamScore, awayTeamScore);
-            matches.Add(game);
+            Matches.Add(game);
             return game.GameId;
         }
 
@@ -44,28 +42,22 @@ namespace FootballWorldCupScoreBoardLib
             if (String.IsNullOrEmpty(gameId))
                 throw new InvalidInputParametersException();
 
-            if (Matches.Count == 0)
+            if (Matches.Count == 0 || Matches is null)
                 throw new EmptyCollectionException();
 
-            int index = FindIndex(gameId, Matches);
+            Game game = FindGameById(gameId);
 
-            if (index == -2)
-                return false;
-
-            if (index == -1)
+            if (game is null)
                 throw new GameIsNotFoundException(gameId);
 
-            IDisplayable game = (Game)Matches[index];
-            Matches[index] = new Game(game.HomeTeamName, game.AwayTeamName, homeTeamScore, awayTeamScore, gameId);
+            game.HomeTeamScore = homeTeamScore;
+            game.AwayTeamScore = awayTeamScore;
             return true;
         }
 
-        private int FindIndex(string gameId, List<IDisplayable> matches)
+        private Game FindGameById(string gameId)
         {
-            if (matches is null)
-                return -2;
-
-            return matches.FindIndex(elem => elem.GameId == gameId);
+            return Matches.Find(elem => elem.GameId == gameId);
         }
 
         public bool FinishGame(string gameId)
@@ -73,24 +65,35 @@ namespace FootballWorldCupScoreBoardLib
             if (String.IsNullOrEmpty(gameId))
                 throw new InvalidInputParametersException();
 
-            if (Matches.Count == 0)
+            if (Matches.Count == 0 || Matches is null)
                 throw new EmptyCollectionException();
 
-            int index = FindIndex(gameId, Matches);
+            Game game = FindGameById(gameId);
 
-            if (index == -2)
-                return false;
-
-            if (index == -1)
+            if (game is null)
                 throw new GameIsNotFoundException(gameId);
 
-            Matches.RemoveAt(index);
+            Matches.Remove(game);
             return true;
         }
 
         public List<string> GetSummary()
         {
-            throw new NotImplementedException();
+            if (Matches.Count == 0)
+                throw new EmptyCollectionException();
+
+            Matches.Sort();
+            return ConvertMatchesToString();         
         }
+
+        private List<string> ConvertMatchesToString()
+        {
+            List<string> summary = new List<string>();
+
+            foreach (Game game in Matches)
+                summary.Add(game.ToString());
+            return summary;                           
+        }
+     
     }
 }

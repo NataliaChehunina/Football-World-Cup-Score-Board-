@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using FootballWorldCupScoreBoardLib;
 
 namespace FootballWorldCupScoreBoardLib.Tests
 {
@@ -12,7 +11,7 @@ namespace FootballWorldCupScoreBoardLib.Tests
         public void TestStartGame()
         {
             Scoreboard board = new Scoreboard();
-            List<Game> resultList = new List<Game>();
+            List<Game> resultList = new List<Game>(); 
 
             string id = board.StartGame("France","Germany");
             resultList.Add(new Game ("France", "Germany", 0, 0, id));
@@ -52,25 +51,31 @@ namespace FootballWorldCupScoreBoardLib.Tests
 
             string id = board.StartGame("Germany","Brazil");
             board.UpdateScore(id, 2, 1);
+            System.Threading.Thread.Sleep(20);
             
-
             id = board.StartGame("Argentina", "Uruguay");
-            board.UpdateScore(id, 3, 3);
-            
+            board.UpdateScore(id, 2, 3);
+            System.Threading.Thread.Sleep(20);
 
             id = board.StartGame("Italy", "England");
-            board.UpdateScore(id, 1, 2);
-            
+            board.UpdateScore(id, 2, 2);
+            System.Threading.Thread.Sleep(20);
 
             id = board.StartGame("Italy", "Sweden");
-            board.UpdateScore(id, 4, 2);
+            board.UpdateScore(id, 3, 2);
+            System.Threading.Thread.Sleep(20);
 
-            resultList.Add($"Italy 4 - Sweden 2");
-            resultList.Add($"Argentina 3 - Uruguay 3");
-            resultList.Add($"Italy 1 - England 2");
+            id = board.StartGame("France", "USA");
+            board.UpdateScore(id, 5, 1);
+
+            resultList.Add($"France 5 - USA 1");
+            resultList.Add($"Italy 3 - Sweden 2");
+            resultList.Add($"Argentina 2 - Uruguay 3");
+            resultList.Add($"Italy 2 - England 2");
             resultList.Add($"Germany 2 - Brazil 1");
 
-            CollectionAssert.AreEqual(board.GetSummary(), resultList);
+            var elem = board.GetSummary();
+            CollectionAssert.AreEqual(elem, resultList);
         }
 
         [TestMethod]

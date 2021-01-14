@@ -9,6 +9,7 @@ namespace FootballWorldCupScoreBoardLib
     public interface IDisplayable
     {
         string GameId { get; }
+        DateTime StartTime { get; }
         byte HomeTeamScore { set; get; }
         byte AwayTeamScore { set; get; }
         string HomeTeamName { get; } // Team name is immutable in the context of the one game
