@@ -94,5 +94,64 @@ namespace FootballWorldCupScoreBoardLib.Tests
             board.StartGame("Spain","Greece");
             Assert.ThrowsException<GameIsNotFoundException>(() => board.FinishGame(new Guid().ToString()));
         }
+
+        [TestMethod]
+        public void TestFinishGame()
+        {
+            Scoreboard board = new Scoreboard();
+            List<Game> resultList = new List<Game>();
+
+            string id = board.StartGame("Italy", "Brazil");
+            resultList.Add(new Game("Italy", "Brazil", 0, 0, id));
+
+            id = board.StartGame("Germany", "Spain");
+            board.FinishGame(id);
+
+            CollectionAssert.AreEqual(board.Matches, resultList);
+        }
+
+        [TestMethod]
+        public void TestUpdateScoreEmptyList()
+        {
+            Scoreboard board = new Scoreboard();
+            Assert.ThrowsException<EmptyCollectionException>(() => board.UpdateScore(new Guid().ToString(), 3, 0));
+        }
+
+        [TestMethod]
+        public void TestUpdateScoreEmptyGameId()
+        {
+            Scoreboard board = new Scoreboard();
+            Assert.ThrowsException<InvalidInputParametersException>(() => board.UpdateScore(String.Empty, 0, 1));
+        }
+
+        [TestMethod]
+        public void TestUpdateScoreNonexistentGame()
+        {
+            Scoreboard board = new Scoreboard();
+            board.StartGame("Spain", "Greece");
+            Assert.ThrowsException<GameIsNotFoundException>(() => board.UpdateScore(new Guid().ToString(), 0, 2));
+        }
+
+        [TestMethod]
+        public void TestUpdateScore()
+        {
+            Scoreboard board = new Scoreboard();
+            List<Game> resultList = new List<Game>();
+
+            string id = board.StartGame("Italy", "Brazil");
+            board.UpdateScore(id, 1, 1);
+            resultList.Add(new Game("Italy", "Brazil", 1, 1, id));
+
+            id = board.StartGame("Germany", "Spain");
+            board.UpdateScore(id, 2, 0);
+            resultList.Add(new Game("Germany", "Spain", 2, 0, id));
+
+            id = board.StartGame("Denmark", "Italy");
+            board.UpdateScore(id, 0, 2);          
+            resultList.Add(new Game("Denmark", "Italy", 0, 2, id));
+
+            CollectionAssert.AreEqual(board.Matches, resultList);
+        }
+
     }
 }
