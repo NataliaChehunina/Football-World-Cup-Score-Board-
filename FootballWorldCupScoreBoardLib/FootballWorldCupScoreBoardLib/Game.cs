@@ -25,7 +25,6 @@ namespace FootballWorldCupScoreBoardLib
                 GameId = Guid.NewGuid().ToString();
             else
                 GameId = gameId;
-
         }
 
         public override bool Equals(object obj)

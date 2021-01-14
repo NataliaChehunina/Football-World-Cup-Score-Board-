@@ -47,7 +47,7 @@ namespace FootballWorldCupScoreBoardLib
             if (Matches.Count == 0)
                 throw new EmptyCollectionException();
 
-            int index = FindIndex(gameId, homeTeamScore, awayTeamScore, Matches);
+            int index = FindIndex(gameId, Matches);
 
             if (index == -2)
                 return false;
@@ -60,7 +60,7 @@ namespace FootballWorldCupScoreBoardLib
             return true;
         }
 
-        private int FindIndex(string gameId, byte homeTeamScore, byte awayTeamScore, List<IDisplayable> matches)
+        private int FindIndex(string gameId, List<IDisplayable> matches)
         {
             if (matches is null)
                 return -2;
@@ -70,7 +70,22 @@ namespace FootballWorldCupScoreBoardLib
 
         public bool FinishGame(string gameId)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(gameId))
+                throw new InvalidInputParametersException();
+
+            if (Matches.Count == 0)
+                throw new EmptyCollectionException();
+
+            int index = FindIndex(gameId, Matches);
+
+            if (index == -2)
+                return false;
+
+            if (index == -1)
+                throw new GameIsNotFoundException(gameId);
+
+            Matches.RemoveAt(index);
+            return true;
         }
 
         public List<string> GetSummary()
