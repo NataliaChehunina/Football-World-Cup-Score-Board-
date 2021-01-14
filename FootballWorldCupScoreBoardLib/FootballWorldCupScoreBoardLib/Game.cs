@@ -14,14 +14,22 @@ namespace FootballWorldCupScoreBoardLib
         public string HomeTeamName { get; } // Team name is immutable in the context of the one game
         public string AwayTeamName { get; }
 
-        public Game(string homeTeamName, string awayTeamName, byte homeTeamScore, byte awayTeamScore)
+        public Game(string homeTeamName, string awayTeamName, byte homeTeamScore, byte awayTeamScore, string gameId = "")
         {
-            GameId = new Guid().ToString();
             HomeTeamName = homeTeamName;
             AwayTeamName = awayTeamName;
             HomeTeamScore = homeTeamScore;
             AwayTeamScore = awayTeamScore;
+
+            if(gameId == String.Empty)
+                GameId = new Guid().ToString();
+            else
+                GameId = gameId;
+
         }
+
+
+
 
         //TODO: override Equals and GetHashCode
     }

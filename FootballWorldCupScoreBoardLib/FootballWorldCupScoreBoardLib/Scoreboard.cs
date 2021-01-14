@@ -24,12 +24,12 @@ namespace FootballWorldCupScoreBoardLib
             throw new NotImplementedException();           
         }
 
-        public bool UpdateScore()
+        public bool UpdateScore(string GameId, byte HomeTeamScore, byte AwayTeamScore)
         {
             throw new NotImplementedException();
         }
 
-        public bool FinishGame()
+        public bool FinishGame(string GameId)
         {
             throw new NotImplementedException();
         }

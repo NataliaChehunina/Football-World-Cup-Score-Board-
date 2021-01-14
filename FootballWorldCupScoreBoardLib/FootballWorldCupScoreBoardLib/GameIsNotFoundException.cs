@@ -14,11 +14,10 @@ namespace FootballWorldCupScoreBoardLib
 
         }
 
-        public GameIsNotFoundException(string GameID, string HomeTeamName, string AwayTeamName)
-            : base($"Game between {HomeTeamName} and {AwayTeamName} with ID {GameID} is not found")
+        public GameIsNotFoundException(string GameID)
+            : base($"Game with ID {GameID} is not found")
         {
 
         }
-
     }
 }

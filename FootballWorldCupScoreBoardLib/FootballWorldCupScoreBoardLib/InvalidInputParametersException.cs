@@ -9,16 +9,16 @@ namespace FootballWorldCupScoreBoardLib
     [Serializable]
     public class InvalidInputParametersException : Exception
     {
-        public InvalidInputParametersException()
+        public InvalidInputParametersException():
+            base("GameId is empty")
         {
 
         }
 
-        public InvalidInputParametersException(string HomeTeamName, string AwayTeamName, byte HomeTeamScore, byte AwayTeamScore)
+        public InvalidInputParametersException(byte HomeTeamScore, byte AwayTeamScore)
             : base
                 (
-                  $"Input parameters cannot be null or empty HomeTeamName = { HomeTeamName}, " + 
-                  $"AwayTeamName = {AwayTeamName}, " +  
+                  $"Input parameters cannot be null or empty, " + 
                   $"{HomeTeamScore}-{AwayTeamScore}"
                 )
         {
@@ -30,5 +30,6 @@ namespace FootballWorldCupScoreBoardLib
         {
 
         }
+
     }
 }

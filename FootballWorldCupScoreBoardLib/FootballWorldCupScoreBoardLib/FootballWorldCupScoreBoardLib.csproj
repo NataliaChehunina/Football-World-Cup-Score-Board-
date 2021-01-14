@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmptyCollectionException.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="GameDuplicateException.cs" />
     <Compile Include="GameIsNotFoundException.cs" />
     <Compile Include="IDisplayable.cs" />
     <Compile Include="InvalidInputParametersException.cs" />
