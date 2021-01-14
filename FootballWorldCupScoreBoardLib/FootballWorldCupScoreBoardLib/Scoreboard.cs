@@ -19,17 +19,28 @@ namespace FootballWorldCupScoreBoardLib
             Matches.AddRange(matches); //to avoid mutilation of the list
         }
 
-        public string StartGame(string HomeTeam, string AwayTeam) //returns GameId; String.Empty - in case of failures
-        { 
-            throw new NotImplementedException();           
+        public string StartGame(string homeTeam, string awayTeam) //returns GameId; String.Empty - in case of failures
+        {
+            if (String.IsNullOrEmpty(homeTeam) || String.IsNullOrEmpty(awayTeam))
+                throw new InvalidInputParametersException(homeTeam, awayTeam);
+            if (homeTeam == awayTeam)
+                throw new InvalidInputParametersException(homeTeam);
+            return AddGame(homeTeam, awayTeam, 0, 0, Matches);
         }
 
-        public bool UpdateScore(string GameId, byte HomeTeamScore, byte AwayTeamScore)
+        private string AddGame(string homeTeam, string awayTeam, byte homeTeamScore, byte awayTeamScore, List<IDisplayable> matches)
+        {
+            Game game = new Game(homeTeam, awayTeam, homeTeamScore, awayTeamScore);
+            matches.Add(game);
+            return game.GameId;
+        }
+
+        public bool UpdateScore(string gameId, byte homeTeamScore, byte awayTeamScore)
         {
             throw new NotImplementedException();
         }
 
-        public bool FinishGame(string GameId)
+        public bool FinishGame(string gameId)
         {
             throw new NotImplementedException();
         }

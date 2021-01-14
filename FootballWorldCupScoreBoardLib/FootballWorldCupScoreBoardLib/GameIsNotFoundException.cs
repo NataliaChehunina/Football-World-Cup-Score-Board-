@@ -14,8 +14,8 @@ namespace FootballWorldCupScoreBoardLib
 
         }
 
-        public GameIsNotFoundException(string GameID)
-            : base($"Game with ID {GameID} is not found")
+        public GameIsNotFoundException(string gameID)
+            : base($"Game with ID {gameID} is not found")
         {
 
         }

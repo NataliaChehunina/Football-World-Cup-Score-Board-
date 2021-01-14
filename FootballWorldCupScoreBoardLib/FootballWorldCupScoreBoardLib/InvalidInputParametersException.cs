@@ -15,18 +15,28 @@ namespace FootballWorldCupScoreBoardLib
 
         }
 
-        public InvalidInputParametersException(byte HomeTeamScore, byte AwayTeamScore)
+        public InvalidInputParametersException(byte homeTeamScore, byte awayTeamScore)
             : base
                 (
-                  $"Input parameters cannot be null or empty, " + 
-                  $"{HomeTeamScore}-{AwayTeamScore}"
+                  $"Input parameters cannot be null or empty " + 
+                  $"Home team score {homeTeamScore} - Away team score {awayTeamScore}"
                 )
         {
 
         }
 
-        public InvalidInputParametersException(string HomeTeamName)
-             : base($"The team names are the same : {HomeTeamName} ")
+        public InvalidInputParametersException(string homeTeamName, string awayTeamName)
+        : base
+        (
+          $"Input parameters cannot be null or empty: " +
+          $"Home team name {homeTeamName} - Away team name {awayTeamName}"
+        )
+        {
+
+        }
+
+        public InvalidInputParametersException(string homeTeamName)
+             : base($"The team names are the same : {homeTeamName} ")
         {
 
         }

@@ -28,9 +28,23 @@ namespace FootballWorldCupScoreBoardLib
 
         }
 
+        public override bool Equals(object obj)
+        {
+            Game game = obj as Game;
 
+            if (game == null)
+            {
+                return false;
+            }
 
+            return game.GameId == this.GameId && game.HomeTeamName == this.HomeTeamName && 
+                game.HomeTeamScore == this.HomeTeamScore && game.AwayTeamName == this.AwayTeamName && 
+                game.AwayTeamScore == this.AwayTeamScore;
+        }
 
-        //TODO: override Equals and GetHashCode
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
